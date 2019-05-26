@@ -1,0 +1,25 @@
+{
+    "name": "allan/framework",
+    "authors": [
+        {
+            "name": "Allan Azevedo",
+            "email": "azevedoallan3@gmail.com"
+        }
+    ],
+    "require": {
+        "pimple/pimple": "^3.2",
+        "symfony/http-foundation": "^3.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "SON\\Framework\\":"src",
+            "App\\":"app"
+        }
+    },
+    "scripts": {
+        "server": "php -S localhost:8000 -t public"
+    },
+    "config": {
+        "process-timeout" : 0
+    }
+}
