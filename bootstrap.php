@@ -8,22 +8,10 @@ require __DIR__ . '/config/containers.php';
 require __DIR__. '/config/events.php';
 require __DIR__ . '/config/routes.php';
 
-try {
-    $result = $router->run();
+$app = new SON\Framework\App($router, $container);
 
-    $response = new SON\Framework\Response;
-    
-    $params = [
-        'container' => $container,
-        'params' => $result['params']
-    ];
-    
-    $response($result['action'], $params);
- 
-    
+require __DIR__. '/config/middlewares.php';
 
-} catch (\SON\Framework\Exceptions\HttpException $e) {
-    echo json_encode(['error' => $e->getMessage()]);
-}
+$app->run();
 
 

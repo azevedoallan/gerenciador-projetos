@@ -11,7 +11,6 @@ class UserController
     {
         $user = new Users($container);
         $user->create(['name' => 'Erik']);
-        $data = $user->get($request->attributes->get(1)); 
-        //return "Meu nome é ".$data['name'];
+        return $user->get($request->attributes->get(1));
     }
 }
