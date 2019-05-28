@@ -20,9 +20,11 @@ class Users
     }
     
     public function create(array $data) {
+      
       $this->events->trigger('creating.users', null, $data);
       //banco de dados
       $this->events->trigger('created.users', null, $data);
+      
         
     }
 }
