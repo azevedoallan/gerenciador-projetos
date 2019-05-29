@@ -4,11 +4,14 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/azval/Desktop/PROJETO/config/containers.php</file>
+            <file>file:/C:/Users/azval/Desktop/PROJETO/config/middlewares.php</file>
             <file>file:/C:/Users/azval/Desktop/PROJETO/config/events.php</file>
             <file>file:/C:/Users/azval/Desktop/PROJETO/app/Controllers/UserController.php</file>
             <file>file:/C:/Users/azval/Desktop/PROJETO/bootstrap.php</file>
+            <file>file:/C:/Users/azval/Desktop/PROJETO/src/App.php</file>
             <file>file:/C:/Users/azval/Desktop/PROJETO/app/Events/UsersCreated.php</file>
             <file>file:/C:/Users/azval/Desktop/PROJETO/app/Models/Users.php</file>
+            <file>file:/C:/Users/azval/Desktop/PROJETO/src/Response.php</file>
         </group>
     </open-files>
 </project-private>

@@ -2,23 +2,66 @@
 
 namespace SON\Framework;
 
+use Pimple\Container;
 use SON\Framework\Response;
 use SON\Framework\Exceptions;
+use SON\Framework\Router;
+
 
 
 class App 
 {
-    private $router;
     private $container;
     private $middlewares = [
         'before' => [],
         'after' => [],
     ];
 
-    public function __construct ($router, $container)
+    public function __construct (Container $container = null)
     {
-        $this->router = $router;
         $this->container = $container;
+
+        if ($this->container == null)
+        {
+            $this->container = new Pimple;
+        }
+    }
+
+    public function getRouter()
+    {
+        if (!$this->container->offsetExists('router')) {
+            $this->container['router'] = function () {
+                return new Router;  
+            };    
+        }
+        return $this->container['router'];
+    }
+
+    public function getResponse()
+    {
+        if (!$this->container->offsetExists('response')) {
+            $this->container['response'] = function () {
+                return new Response;  
+            };    
+        }
+        return $this->container['response'];
+    }
+
+    public function getHttpErrorHandler()
+    {
+        if (!$this->container->offsetExists('httpErrorHandler')) {
+            $this->container['httpErrorHandler'] = function ($c) {
+                header('Content-Type: application/json'); 
+
+                $response = json_encode([
+                    'code' => $c['exception']->getCode(),
+                    'error' => $c['exception']->getMessage()
+                ]);
+
+                return $response;
+            };    
+        }
+        return $this->container['httpErrorHandler'];
     }
 
     public function middleware ($on, $callback)
@@ -29,9 +72,9 @@ class App
     public function run() 
     {   
         try {
-            $result = $this->router->run();
+            $result = $this->getRouter()->run();
             
-            $response = new Response;
+            $response = $this->getResponse();
             
             $params = [
                 'container' => $this->container,
@@ -49,7 +92,8 @@ class App
             }
 
         } catch (HttpException $e) {
-            echo json_encode(['error' => $e->getMessage()]);
+            $this->container['exception'] = $e;
+            echo $this->getHttpErrorHandler();
         }
     }
 }
