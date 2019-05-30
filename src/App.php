@@ -2,11 +2,11 @@
 
 namespace SON\Framework;
 
-
-use SON\Framework\Response;
-use SON\Framework\Exceptions;
-use SON\Framework\Router;
 use Pimple\Container;
+use SON\Framework\Router;
+use SON\Framework\Exceptions\HttpException;
+use SON\Framework\Response;
+
 
 
 
@@ -22,7 +22,7 @@ class App
     {
         $this->container = $container;
 
-        if ($this->container == null)
+        if ($this->container === null)
         {
             $this->container = new Pimple;
         }

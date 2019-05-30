@@ -4,6 +4,7 @@ namespace SON\Framework;
 
 use SON\Framework\Exceptions\HttpException;
 
+
 class Router
 {
    private $routes = [];
@@ -31,6 +32,7 @@ class Router
                     return compact('action', 'params');
             }
         }
+        
         throw new HttpException('Page not found', 404);       
     }
 
