@@ -12,5 +12,4 @@ return array(
     'Symfony\\Component\\HttpFoundation\\' => array($vendorDir . '/symfony/http-foundation'),
     'SON\\Framework\\' => array($baseDir . '/src'),
     'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
-    'App\\' => array($baseDir . '/app'),
 );
