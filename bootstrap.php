@@ -1,17 +1,11 @@
 <?php 
 
-require __DIR__.'/vendor/autoload.php';
+$composer = require __DIR__.'/vendor/autoload.php';
 
-require __DIR__ . '/config/containers.php';
-require __DIR__. '/config/events.php';
+require __DIR__ . '/config/Modules.php';
 
+$app = new SON\Framework\App($composer, $modules);
 
-$app = new SON\Framework\App($container);
-
-$router = $app->getRouter();
-
-require __DIR__. '/config/middlewares.php';
-require __DIR__ . '/config/routes.php';
 
 $app->run();
 
