@@ -42,4 +42,22 @@ class Users
       return $result;
     
     }
+
+    public function update($id, array $data)
+    {
+      $this->events->trigger('updating.users', null, $data);
+
+      $sql = 'UPDATE `users` SET name=? where id=?';
+
+      $data = array_merge($data, [$id]);
+
+      $stmt = $this->db->prepare($sql);
+      $stmt->execute(array_values($data));
+
+      $result = $this->get($id);
+
+      $this->events->trigger('updated.users', null, $result);
+
+      return $result;
+    }
 }
