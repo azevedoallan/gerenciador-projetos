@@ -33,6 +33,10 @@ class Users
       
       $sql = 'INSERT INTO `users`(`name`) VALUES (?)';
 
+      $queryBuilder = new \SON\Framework\QueryBuilder;
+      $query = $queryBuilder->insert('users', $data);
+
+
       $stmt = $this->db->prepare($sql);
       $stmt->execute(array_values($data));
       $result = $this->get($this->db->lastInsertId()); 
