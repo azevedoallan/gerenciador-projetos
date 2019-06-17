@@ -47,6 +47,14 @@ class QueryBuilder
 
     public function getData() :\stdClass
     {
+        $query = new \stdClass;
+        $query->sql = $this->sql;
+        $query->bind = $this->bind;
 
+        $this->sql = null;
+        $this->bind = [];
+
+        return $query;
+        
     }
 }
