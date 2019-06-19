@@ -30,15 +30,13 @@ class Users
     public function create(array $data) {
       
       $this->events->trigger('creating.users', null, $data);
-      
-      $sql = 'INSERT INTO `users`(`name`) VALUES (?)';
 
       $queryBuilder = new \SON\Framework\QueryBuilder;
-      $query = $queryBuilder->insert('users', $data);
+      $query = $queryBuilder->insert('users', $data)
+        ->getData();
 
-
-      $stmt = $this->db->prepare($sql);
-      $stmt->execute(array_values($data));
+      $stmt = $this->db->prepare($query->sql);
+      $stmt->execute($query->bind);
       $result = $this->get($this->db->lastInsertId()); 
 
       $this->events->trigger('created.users', null, $result);

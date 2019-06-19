@@ -22,9 +22,7 @@ class QueryBuilder
         $this->bind = array_values($data);
 
         $this->sql = sprintf($sql, implode(', ', $colums), implode(', ', $values));
-
-        var_dump ($this->sql, $this->bind);exit;
-        
+                
         return $this;
     }
 
