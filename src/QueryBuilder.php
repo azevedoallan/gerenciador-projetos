@@ -28,8 +28,18 @@ class QueryBuilder
 
     public function update(string $table, array $data)
     {
-        $this->sql = "UPDATE `{$table}` SET name=?";
-        return $this;
+        $this->sql = "UPDATE `{$table}` SET %s";
+        
+        $colums = array_keys($data);
+        
+        foreach ($colums as &$column) {
+            $column = $column . '=?';
+        }
+        
+        $this->bind = array_values($data);
+        
+        $this->sql = sprintf($sql, implode(', ' $colums));
+
     }
 
     public function delete(string $table)
