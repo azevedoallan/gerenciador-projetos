@@ -38,7 +38,7 @@ class QueryBuilder
         
         $this->bind = array_values($data);
         
-        $this->sql = sprintf($sql, implode(', ' $colums));
+        $this->sql = sprintf($sql, implode(', ', $colums));
 
     }
 
@@ -50,7 +50,21 @@ class QueryBuilder
 
     public function where(array $conditions)
     {
+        if (!$this->sql) {
+            throw new Exception("select(), update() or delete() is required before where() method");
+        }
 
+        $colums = array_keys($conditions);
+
+        foreach ($colums as &$column) {
+            $column = $column . "=?";
+        }
+
+        $this->bind = array_merge($this->bind, array_values($conditions));
+
+        $this->sql .= ' WHERE ' . implode('and ', $colums);
+
+        return $this;
     }
 
     public function getData() :\stdClass

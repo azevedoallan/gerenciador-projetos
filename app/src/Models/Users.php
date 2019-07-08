@@ -2,22 +2,30 @@
 
 namespace App\Models;
 use Pimple\Container;
+use SON\Framework\QueryBuilder;
 
 class Users 
 {
     private $db;
+    private $events;
+    private $queryBuilder;
 
     public function __construct(container $container)
     {
         $this->db = $container['db'];
         $this->events = $container['events'];
+        $this->queryBuilder = new QueryBuilder;
     }
 
     public function get($id) 
     {
-       $stmt = $this->db->prepare('SELECT * FROM `users` WHERE id=?');
-       $stmt->execute([$id]);
-       return $stmt->fetch(\PDO::FETCH_ASSOC); 
+      $query = $this->queryBuilder->select('users')
+      -> where(['id' => $id])
+      ->getData();
+
+      $stmt = $this->db->prepare($query->sql);
+      $stmt->execute($query->bind);
+      return $stmt->fetch(\PDO::FETCH_ASSOC); 
     }
 
     public function all() 
@@ -31,8 +39,7 @@ class Users
       
       $this->events->trigger('creating.users', null, $data);
 
-      $queryBuilder = new \SON\Framework\QueryBuilder;
-      $query = $queryBuilder->insert('users', $data)
+      $query = $this->queryBuilder->insert('users', $data)
         ->getData();
 
       $stmt = $this->db->prepare($query->sql);
